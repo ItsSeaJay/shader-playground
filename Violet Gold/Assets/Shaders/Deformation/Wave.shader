@@ -32,15 +32,18 @@
 				float4 vertex : SV_POSITION;
 			};
 
-			// Property Implementation
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			float4 _Magnitude;
 			
 			v2f vert (appdata v)
 			{
+				// Convert the object to a series of floating-point values
 				v2f o;
+				// Obtain the object's world space as a float3
 				float3 WorldSpace = mul(unity_ObjectToWorld, v.vertex).xyz;
+
+				// Get the position of the vertex store it
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
 				// Deform the mesh in a wave pattern on the XZ plane
