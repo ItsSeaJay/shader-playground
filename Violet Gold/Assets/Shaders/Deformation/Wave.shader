@@ -3,7 +3,8 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
-		_Magnitude ("Magnitude", Vector) = (0, 0, 0, 0)
+		_Magnitude ("Magnitude", Vector) = (1, 1, 0, 0)
+		_Speed ("Speed", Vector) = (1, 1, 0, 0)
 	}
 	SubShader
 	{
@@ -35,6 +36,7 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			float4 _Magnitude;
+			float4 _Speed;
 			
 			v2f vert (appdata v)
 			{
@@ -47,8 +49,8 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 
 				// Deform the mesh in a wave pattern on the XZ plane
-				o.vertex.x += sin(_Time.w) * _Magnitude.x;
-				o.vertex.y += sin(WorldSpace.x + _Time.w) * _Magnitude.y;
+				o.vertex.x += sin((_Time.w * _Speed.x)) * _Magnitude.x;
+				o.vertex.y += sin(WorldSpace.x + (_Time.w * _Speed.y)) * _Magnitude.y;
 
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);
