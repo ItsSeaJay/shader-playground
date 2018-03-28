@@ -35,14 +35,18 @@
 			// Property Implementation
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			float4 _Magnitude;
 			
 			v2f vert (appdata v)
 			{
 				v2f o;
 				float3 WorldSpace = mul(unity_ObjectToWorld, v.vertex).xyz;
 				o.vertex = UnityObjectToClipPos(v.vertex);
-				o.vertex.y += sin(WorldSpace.x + _Time.w);
-				o.vertex.x += sin(WorldSpace.y + _Time.w);
+
+				// Deform the mesh in a wave pattern on the XZ plane
+				o.vertex.x += sin(_Time.w) * _Magnitude.x;
+				o.vertex.y += sin(WorldSpace.x + _Time.w) * _Magnitude.y;
+
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o,o.vertex);
 
