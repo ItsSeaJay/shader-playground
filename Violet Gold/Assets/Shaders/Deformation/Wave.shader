@@ -42,6 +42,7 @@
 			{
 				// Convert the object to a series of floating-point values
 				v2f o;
+
 				// Obtain the object's world space as a float3
 				float3 WorldSpace = mul(unity_ObjectToWorld, v.vertex).xyz;
 
